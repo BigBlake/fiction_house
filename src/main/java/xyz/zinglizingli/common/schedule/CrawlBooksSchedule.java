@@ -1,8 +1,9 @@
-package xyz.zinglizingli.search.schedule;
+package xyz.zinglizingli.common.schedule;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,7 +14,7 @@ import xyz.zinglizingli.books.po.BookContent;
 import xyz.zinglizingli.books.po.BookIndex;
 import xyz.zinglizingli.books.service.BookService;
 import xyz.zinglizingli.books.util.ExcutorUtils;
-import xyz.zinglizingli.search.utils.RestTemplateUtil;
+import xyz.zinglizingli.common.utils.RestTemplateUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,9 @@ public class CrawlBooksSchedule {
     private BookService bookService;
 
     RestTemplate restTemplate = RestTemplateUtil.getInstance("utf-8");
+
+    @Value("${books.lowestScore}")
+    private Float lowestScore;
 
 
     private boolean isExcuting = false;
@@ -485,7 +489,7 @@ public class CrawlBooksSchedule {
             try {
                 Float score = Float.parseFloat(scoreMatch.group(1));
 
-                if (score < 8.0) {//数据库空间有效暂时爬取7.5分以上的小说
+                if (score < lowestScore) {//数据库空间有限，暂时爬取8.0分以上的小说
                     continue;
                 }
 
@@ -566,7 +570,7 @@ public class CrawlBooksSchedule {
                                             book.setCatid(catNum);
                                             book.setBookDesc(desc);
                                             book.setBookName(bookName);
-                                            book.setScore(score);
+                                            book.setScore(score>10?8.0f:score);
                                             book.setPicUrl(picSrc);
                                             book.setBookStatus(status);
                                             book.setUpdateTime(updateTime);
@@ -725,7 +729,7 @@ public class CrawlBooksSchedule {
             try {
                 Float score = Float.parseFloat(scoreMatch.group(1));
 
-                if (score < 8.0) {//数据库空间有效暂时爬取7.5分以上的小说
+                if (score < lowestScore) {//数据库空间有限，暂时爬取8.0分以上的小说
                     continue;
                 }
                 String bookName = bookNameMatch.group(1);
@@ -765,7 +769,7 @@ public class CrawlBooksSchedule {
                                     book.setCatid(catNum);
                                     book.setBookDesc(desc);
                                     book.setBookName(bookName);
-                                    book.setScore(score);
+                                    book.setScore(score>10?8.0f:score);
                                     book.setPicUrl(picSrc);
                                     book.setBookStatus(status);
                                     book.setUpdateTime(updateTime);

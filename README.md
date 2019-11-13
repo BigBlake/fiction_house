@@ -12,11 +12,26 @@ Springboot+Mybatis+Mysql+Ehcache+Thymeleaf+Layui
 #### 安装教程
 
 1. 数据准备，拉取小说爬虫程序，按照说明文件爬取网络小说到数据库中。（[点击获取爬虫程序](https://gitee.com/xiongxyang/crawl-book)）
+
 2. 修改项目application.yml配置文件中的数据库配置。
-3. 本地直接运行或使用maven插件打包成jar文件上传到服务器上。
-4. `http://ip:port`访问首页
-5. `http://ip:port/books`访问精品小说模块
-6. `http://ip:port/book/searchSoftBook.html`访问轻小说模块
+
+   ![](./assets/database_config.png)
+
+3. 修改项目application.yml配置文件中的首页本站推荐小说配置（修改的小说需要在数据库中存在）。
+
+   ![](./assets/index_config.png)
+
+4. 根据需求，修改项目application.yml配置文件中的爬取小说最低评分配置（建议和爬虫程序中的最低评分配置保持一致）。
+
+   ![](./assets/score_config.png)
+
+5. 本地直接运行或使用maven插件打包成jar文件上传到服务器上。
+
+6. `http://ip:port`访问首页。
+
+7. `http://ip:port/books`访问精品小说模块。
+
+8. `http://ip:port/book/searchSoftBook.html`访问轻小说模块。
 
 #### 项目截图
 
@@ -50,6 +65,26 @@ Springboot+Mybatis+Mysql+Ehcache+Thymeleaf+Layui
 
 ![mini4](./assets/mini4.png)
 
+
+
+#### 功能开发清单（包括待开发计划）
+
+[点击下载高清大图](./assets/小说精品屋功能清单.twdx)
+
+![1573589880588](./assets/1573592459699.png)
+
+#### 后期架构演进
+
+为了满足部分网站用户量大、并发量高的需求，将计划明年5月份之前上线Spring Cloud微服务架构的分支版本供有此需求的用户使用。
+
+计划开发技术栈：Nginx + Spring Cloud + Spring Security OAuth2 SSO + Mybatis + Redis + Mycat + Mysql + RabbitMq + Elastic Search + FastDfs 。
+
+架构设计图：
+
+![1573589880588](./assets/springcloud.jpg)
+
+后续系统功能会越来越多，结构会越来越复杂，所以将考虑出完整图文和视频教程，请大家持续关注。喜欢此项目的可以给我的GitHub和Gitee加个Star支持一下 。
+
 ##### 演示地址1
 
 [点击前往](https://www.zinglizingli.xyz)
@@ -81,7 +116,11 @@ Springboot+Mybatis+Mysql+Ehcache+Thymeleaf+Layui
 ##### 捐赠名单 
 
 | 捐赠者 | 金额     | 时间                        |
-| ------ | -------- | --------------------------- |
+| :----- | :------- | :-------------------------- |
+| **式   | ￥8.88   | 2019年11月12日 下午23点54分 |
+| *星    | ￥20.00  | 2019年11月12日 下午20点11分 |
+| 完美** | ￥100.00 | 2019年11月12日 下午15点32分 |
+| *东    | ￥10.00  | 2019年11月11日 下午21点23分 |
 | **海   | ￥ 15.00 | 2019年11月11日 上午7点45分  |
 | *鹏飞  | ￥5.00   | 2019年11月11日 上午0点14分  |
 | *沐    | ￥10.00  | 2019年11月10日 上午12点09分 |

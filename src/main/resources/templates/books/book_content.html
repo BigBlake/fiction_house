@@ -157,7 +157,7 @@
             position: fixed;
             width: 100%;
             left: 0px;
-            bottom: 20px;
+            bottom: 110px;
             text-align: center;
         }
 
@@ -212,7 +212,7 @@
 </div>
 
 
-<div class="screen_toolbar" style="display: none">
+<div id="screenInput" class="screen_toolbar" style="display: none">
     <div style="height: 5px" class="layui-col-xs2 layui-col-sm3 layui-col-md3 layui-col-lg3"></div>
     <div class="layui-col-xs6 layui-col-sm4 layui-col-md4 layui-col-lg4">
         <input type="text" id="screenBulletText" required lay-verify="required" placeholder="请输入弹幕内容,右下角开关可控制弹幕是否开启" autocomplete="off"
@@ -224,7 +224,7 @@
     </div>
 </div>
 
-<form class="layui-form">
+<form id="screenSwitch" class="layui-form">
     <div class="layui-form-item" style="position: fixed;right: 0px;bottom: 100px" title="弹幕开关">
         <!-- <label  class="layui-form-label" style="opacity:0.5;font-weight: bold;color: red;">弹幕</label>-->
         <div class="layui-input-block">
@@ -240,6 +240,17 @@
 <div th:replace="common/js :: js">
 </div>
 <script>
+    var ua = navigator.userAgent;
+
+    var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+
+        isIphone =!ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+
+        isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+
+        isMobile = isIphone || isAndroid;
+
+
     $.get("/book/addVisit", {"bookId": $("#bookIdHidden").val()}, function () {
     });
 
@@ -256,6 +267,8 @@
         }
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(bp, s);
+
+        $("#chaptercontent").css("min-height",($(window).height()-260)+"px");
 
 
     })();
@@ -349,6 +362,11 @@
             localStorage.setItem(isShowKey, true);
             loadBullet();
         }
+        if(isMobile){
+            $("#screenInput").css("display","none");
+            
+            
+        }
     }
 
     // 新建一个弹幕
@@ -404,21 +422,23 @@
                         if(!eval(localStorage.getItem(isShowKey))){
                             clearInterval(schedule);
                         }
-                        currentCreateTime = new Date(data[i].createTime).getTime();
-                        if(lastCreateTime && currentCreateTime-lastCreateTime>60000 && sllepTime <= 3000){
-                            if(sllepTime==3000) {
+                        if(data.length>i) {
+                            currentCreateTime = new Date(data[i].createTime).getTime();
+                            if (lastCreateTime && currentCreateTime - lastCreateTime > 60000 && sllepTime <= 3000) {
+                                if (sllepTime == 3000) {
+                                    lastCreateTime = currentCreateTime;
+                                }
+                                sllepTime += 3000;
+                            } else {
+                                sllepTime = 0;
+                                var bullet = data[i].screenBullet;
+                                // 创建弹幕
+                                var jqueryDom = createScreenbullet(bullet);
+                                // 添加定时任务
+                                addInterval(jqueryDom);
+                                i++;
                                 lastCreateTime = currentCreateTime;
                             }
-                            sllepTime+=3000;
-                        }else{
-                            sllepTime = 0;
-                            var bullet = data[i].screenBullet;
-                            // 创建弹幕
-                            var jqueryDom = createScreenbullet(bullet);
-                            // 添加定时任务
-                            addInterval(jqueryDom);
-                            i++;
-                            lastCreateTime = currentCreateTime;
                         }
 
 

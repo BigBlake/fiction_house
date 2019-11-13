@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+2.<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>xyz.zinglizingli</groupId>
-    <artifactId>search</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>search</name>
+    <artifactId>fiction_hourse</artifactId>
+    <version>1.2.0</version>
+    <name>fiction_hourse</name>
     <description>小说精品楼</description>
 
     <properties>
